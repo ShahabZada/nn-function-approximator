@@ -14,13 +14,13 @@ optimizer = optim.SGD(model.parameters(), lr=0.05)
 
 # Generate synthetic data for demonstration
 # torch.manual_seed(42)
-x_data = torch.linspace(-6, 9, steps=1000)
+x_data = torch.linspace(-6, 6, steps=100)
 x_data = torch.reshape(x_data, (x_data.shape[0], 1))
 # print(torch.randn(100, 1).shape, x_data.shape)
 y_true = torch.sin(x_data)#2 * x_data + 1 #+ 0.1 * torch.randn(100, 1)  # y = 2x + 1 with noise
 
 # Training loop
-num_epochs = 1000
+num_epochs = 10000
 for epoch in range(num_epochs):
     # Forward pass
     y_pred = model(x_data)
@@ -50,7 +50,7 @@ for epoch in range(num_epochs):
 
 # Test the model
 # test_input = torch.tensor([[3.0]])  # Test with input x = 3.0
-x_data_test = torch.linspace(-9, 9, steps=1000)
+x_data_test = torch.linspace(-6, 6, steps=1000)
 x_data_test = torch.reshape(x_data_test, (x_data_test.shape[0], 1))
 predicted_output = model(x_data_test)
 # print(f'Predicted output for x = 3.0: {predicted_output.item():.4f}')
