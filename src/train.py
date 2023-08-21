@@ -14,7 +14,7 @@ optimizer = optim.SGD(model.parameters(), lr=0.05)
 
 # Generate synthetic data for demonstration
 # torch.manual_seed(42)
-x_data = torch.linspace(-6, 6, steps=100)
+x_data = torch.linspace(-6, 6, steps=50)
 x_data = torch.reshape(x_data, (x_data.shape[0], 1))
 # print(torch.randn(100, 1).shape, x_data.shape)
 y_true = torch.sin(x_data)#2 * x_data + 1 #+ 0.1 * torch.randn(100, 1)  # y = 2x + 1 with noise
