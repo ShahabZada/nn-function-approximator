@@ -1,19 +1,39 @@
 import torch
 import torch.nn as nn
-import torch.optim as optim
 
 # Define the neural network class
 class RegressionNet(nn.Module):
     def __init__(self):
         super(RegressionNet, self).__init__()
         self.layers = nn.Sequential(
-            nn.Linear(1, 32),  # 1 input neuron, 32 hidden neurons
+            nn.Linear(1, 32),  
             nn.ReLU(),
-            nn.Linear(32, 64),  # 32 hidden neurons, 64 hidden neurons
+            nn.Linear(32, 32),  
             nn.ReLU(),
-            nn.Linear(64, 64),  # 32 hidden neurons, 64 hidden neurons
+            nn.Linear(32, 32),  
             nn.ReLU(),
-            nn.Linear(64, 1)    # 64 hidden neurons, 1 output neuron
+            nn.Linear(32, 32),  
+            nn.ReLU(),
+            nn.Linear(32, 1)   
+        )
+        
+    def forward(self, x):
+        return self.layers(x)
+    
+
+class RegressionNet2D(nn.Module):
+    def __init__(self):
+        super(RegressionNet2D, self).__init__()
+        self.layers = nn.Sequential(
+            nn.Linear(2, 32), 
+            nn.ReLU(),
+            nn.Linear(32, 32),  
+            nn.ReLU(),
+            nn.Linear(32, 32),  
+            nn.ReLU(),
+            nn.Linear(32, 32),  
+            nn.ReLU(),
+            nn.Linear(32, 1)    
         )
         
     def forward(self, x):
