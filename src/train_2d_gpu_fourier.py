@@ -3,18 +3,19 @@ import torch.nn as nn
 import torch.optim as optim
 import matplotlib.pyplot as plt
 from utils import save_file
-from network import RegressionNet2D
+from fourier_network import RegressionNet2D
 # import cv2
 from PIL import Image
 import numpy as np
 from torch.utils.data import DataLoader
-from dataset import NNApproxDataset
+from dataset import NNApproxDatasetFourier
 from torch.optim import lr_scheduler
 
+n_fourier_features = 16
 
 device = torch.device("cuda:0" if (torch.cuda.is_available() ) else "cpu")
 
-dataset = NNApproxDataset()
+dataset = NNApproxDatasetFourier(n_fourier_features)
 
 train_dataloader = DataLoader(dataset, batch_size=len(dataset), shuffle=False)
 
@@ -23,23 +24,24 @@ for X,y in train_dataloader:
     X= X.to(device)
     y= y.to(device)
 
+# 
+# print(X.shape)
 # exit()
 
-
-model = RegressionNet2D().to(device)
+model = RegressionNet2D(n_fourier_features=n_fourier_features).to(device)
 
 
 
 
 # Define your initial learning rate
-initial_lr = 0.004
+initial_lr = 0.02
 
 # Create your optimizer
 # optimizer = optim.SGD(model.parameters(), lr=initial_lr, momentum=0.5)
 optimizer = torch.optim.Adam(model.parameters(), lr=initial_lr)
 
 # Create a learning rate scheduler
-scheduler = lr_scheduler.StepLR(optimizer, step_size=10000, gamma=0.75)
+scheduler = lr_scheduler.StepLR(optimizer, step_size=1000, gamma=0.85)
 
 # Define the loss function (mean squared error) and the optimizer (e.g., stochastic gradient descent)
 criterion = nn.MSELoss()
@@ -51,7 +53,7 @@ criterion = nn.MSELoss()
 
 
 # Training loop
-num_epochs = 100000
+num_epochs = 20000
 
 y_pred_list = []
 
